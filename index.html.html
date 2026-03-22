@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SthirClarity — Clarity Calls for High Performers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0A0A08;
+    --off-white: #F5F2EC;
+    --warm-gray: #8A8780;
+    --gold: #B89355;
+    --gold-light: #D4AF7A;
+    --divider: rgba(138,135,128,0.2);
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--off-white);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 4rem;
+    background: rgba(10,10,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .nav-logo {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--off-white);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--off-white); }
+
+  .nav-cta {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    border: 1px solid rgba(184,147,85,0.4);
+    padding: 0.55rem 1.4rem;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover {
+    background: rgba(184,147,85,0.1);
+    border-color: var(--gold);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(184,147,85,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero-headline {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 7vw, 7rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    max-width: 14ch;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-sub {
+    margin-top: 2.5rem;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--warm-gray);
+    max-width: 42ch;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--black);
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1rem 2.5rem;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--warm-gray);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--off-white); }
+
+  .btn-ghost::after {
+    content: '→';
+    transition: transform 0.2s;
+  }
+
+  .btn-ghost:hover::after { transform: translateX(4px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 3rem;
+    left: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+  }
+
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--warm-gray);
+  }
+
+  .scroll-text {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    height: 1px;
+    background: var(--divider);
+    margin: 0 4rem;
+  }
+
+  /* STATEMENT SECTION */
+  .statement {
+    padding: 8rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .statement-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding-top: 0.5rem;
+  }
+
+  .statement-text {
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 3vw, 2.6rem);
+    font-weight: 300;
+    line-height: 1.4;
+    color: var(--off-white);
+  }
+
+  .statement-text em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  /* WHO IT'S FOR */
+  .for-section {
+    padding: 8rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    align-items: center;
+  }
+
+  .for-content h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 2rem;
+  }
+
+  .for-content p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--warm-gray);
+    margin-bottom: 1.5rem;
+  }
+
+  .for-list {
+    list-style: none;
+    margin-top: 2rem;
+  }
+
+  .for-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--divider);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--warm-gray);
+  }
+
+  .for-list li::before {
+    content: '—';
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 0.05em;
+  }
+
+  .for-visual {
+    position: relative;
+  }
+
+  .for-quote-card {
+    border: 1px solid rgba(184,147,85,0.25);
+    padding: 3rem;
+    position: relative;
+  }
+
+  .for-quote-card::before {
+    content: '\201C';
+    font-family: var(--font-serif);
+    font-size: 8rem;
+    line-height: 1;
+    color: rgba(184,147,85,0.15);
+    position: absolute;
+    top: 1rem;
+    left: 2rem;
+  }
+
+  .for-quote-text {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--off-white);
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .for-quote-attr {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--warm-gray);
+  }
+
+  .for-quote-attr strong {
+    display: block;
+    color: var(--gold);
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+  }
+
+  /* ROOT CAUSES */
+  .causes-section {
+    padding: 8rem 4rem;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .causes-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    margin-bottom: 5rem;
+    align-items: end;
+  }
+
+  .causes-header h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+  }
+
+  .causes-header p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--warm-gray);
+  }
+
+  .causes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .cause-card {
+    padding: 3rem 2.5rem;
+    border: 1px solid var(--divider);
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .cause-card:hover { border-color: rgba(184,147,85,0.4); }
+
+  .cause-number {
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    font-weight: 300;
+    color: rgba(184,147,85,0.15);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .cause-title {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--off-white);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .cause-desc {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: var(--warm-gray);
+  }
+
+  /* HOW IT WORKS */
+  .process-section {
+    padding: 8rem 4rem;
+  }
+
+  .process-header {
+    margin-bottom: 5rem;
+  }
+
+  .process-header h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    max-width: 16ch;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 1.5rem;
+    left: 2rem;
+    right: 2rem;
+    height: 1px;
+    background: var(--divider);
+  }
+
+  .process-step {
+    padding: 0 2rem;
+    padding-top: 4rem;
+    position: relative;
+  }
+
+  .process-step::before {
+    content: '';
+    position: absolute;
+    top: calc(1.5rem - 5px);
+    left: 2rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    background: var(--black);
+  }
+
+  .step-time {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .step-title {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--off-white);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .step-desc {
+    font-size: 0.85rem;
+    line-height: 1.75;
+    color: var(--warm-gray);
+  }
+
+  /* TESTIMONIAL */
+  .testimonial-section {
+    padding: 8rem 4rem;
+    background: rgba(184,147,85,0.04);
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .testimonial-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .testimonial-quote {
+    font-family: var(--font-serif);
+    font-size: clamp(1.3rem, 2.5vw, 2rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--off-white);
+    margin-bottom: 2.5rem;
+  }
+
+  .testimonial-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 1.5rem;
+  }
+
+  .testimonial-attr {
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    color: var(--warm-gray);
+  }
+
+  /* PRICING */
+  .pricing-section {
+    padding: 8rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    align-items: center;
+  }
+
+  .pricing-content h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  .pricing-content p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--warm-gray);
+    margin-bottom: 1.25rem;
+  }
+
+  .pricing-card {
+    border: 1px solid rgba(184,147,85,0.3);
+    padding: 3.5rem;
+  }
+
+  .price-amount {
+    font-family: var(--font-serif);
+    font-size: 4.5rem;
+    font-weight: 300;
+    color: var(--off-white);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .price-sub {
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    margin-bottom: 2.5rem;
+  }
+
+  .price-includes {
+    list-style: none;
+    margin-bottom: 3rem;
+  }
+
+  .price-includes li {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--divider);
+    font-size: 0.88rem;
+    color: var(--warm-gray);
+  }
+
+  .price-includes li::before {
+    content: '✦';
+    color: var(--gold);
+    font-size: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  /* ABOUT */
+  .about-section {
+    padding: 8rem 4rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 8rem;
+    align-items: start;
+  }
+
+  .about-content h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 2rem;
+  }
+
+  .about-content p {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: var(--warm-gray);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-stat {
+    text-align: right;
+    padding-top: 1rem;
+  }
+
+  .stat-number {
+    font-family: var(--font-serif);
+    font-size: 5rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    padding: 10rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    height: 80vw;
+    background: radial-gradient(circle, rgba(184,147,85,0.05) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .cta-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+
+  .cta-headline {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 3rem;
+    max-width: 18ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-headline em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .cta-note {
+    font-size: 0.82rem;
+    color: var(--warm-gray);
+    margin-top: 1.5rem;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--warm-gray);
+  }
+
+  .footer-logo span { color: var(--gold); }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--off-white); }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(138,135,128,0.5);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 7rem 1.5rem 4rem; }
+    .section-divider { margin: 0 1.5rem; }
+    .statement, .for-section, .pricing-section, .about-section { 
+      grid-template-columns: 1fr; 
+      padding: 5rem 1.5rem; 
+      gap: 3rem;
+    }
+    .causes-section, .process-section, .testimonial-section, .cta-section { 
+      padding: 5rem 1.5rem; 
+    }
+    .causes-header { grid-template-columns: 1fr; gap: 1.5rem; }
+    .causes-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
+    .process-steps::before { display: none; }
+    .process-step { padding: 2rem 0; border-bottom: 1px solid var(--divider); }
+    .process-step::before { display: none; }
+    .about-stat { text-align: left; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 3rem 1.5rem; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Sthir<span>Clarity</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a href="https://calendly.com/sthirclarity/sthirclarity-clarity-call" class="nav-cta">Book a Call</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">One call. One shift.</p>
+  <h1 class="hero-headline">
+    You know what to do.<br>
+    <em>Something stops you.</em>
+  </h1>
+  <p class="hero-sub">
+    SthirClarity is a private, one-hour call for high performers who are capable on paper — but blocked internally. Mentally, socially, or vocally.
+  </p>
+  <div class="hero-actions">
+    <a href="https://calendly.com/sthirclarity/sthirclarity-clarity-call" class="btn-primary">Book Your Clarity Call</a>
+    <a href="#how" class="btn-ghost">See how it works</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <div class="statement-label">The problem</div>
+  <div class="statement-text">
+    Most high performers don't have a knowledge problem. They have a <em>clarity problem.</em> The thinking is there. The execution breaks.
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- WHO IT'S FOR -->
+<section class="for-section" id="about">
+  <div class="for-content">
+    <h2>Built for people who perform —<br>until they don't.</h2>
+    <p>You've done the work. You have the credentials. You've been in the room before. But under certain conditions — pressure, stakes, judgment — something locks up. The thought doesn't come out the way it should. The decision that should be obvious feels murky.</p>
+    <p>That's not a skill gap. That's a clarity gap. And it's fixable in one conversation.</p>
+    <ul class="for-list">
+      <li>Consultants and analysts who freeze in client rooms</li>
+      <li>Founders who know the answer but can't hold the room</li>
+      <li>Professionals who overthink before high-stakes calls</li>
+      <li>Anyone whose performance drops when it matters most</li>
+    </ul>
+  </div>
+  <div class="for-visual">
+    <div class="for-quote-card">
+      <p class="for-quote-text">"A client changed the scope and told me he'd be decreasing my fees. In one conversation with Atharv, I saw something I'd completely missed — the changed scope wasn't a reason to charge less. It was a reason to charge more. I held my position. He kept the fees the same."</p>
+      <div class="for-quote-attr">
+        <strong>Tripti Sharma</strong>
+        Founder, Agency Business
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ROOT CAUSES -->
+<section class="causes-section">
+  <div class="causes-header">
+    <h2>Three things that block high performers</h2>
+    <p>After working with professionals across consulting, business, and leadership — the block almost always comes from one of three places. Not intelligence. Not preparation. Something more structural.</p>
+  </div>
+  <div class="causes-grid">
+    <div class="cause-card">
+      <div class="cause-number">01</div>
+      <div class="cause-title">Cognitive Overload</div>
+      <p class="cause-desc">Too many competing elements in working memory at once. When the mind is managing too much, the signal gets lost in the noise. Clarity breaks before the words do.</p>
+    </div>
+    <div class="cause-card">
+      <div class="cause-number">02</div>
+      <div class="cause-title">Self-Monitoring Interference</div>
+      <p class="cause-desc">Running a parallel evaluation of how you're coming across — while you're trying to perform. The second track steals bandwidth from the first. The result looks like hesitation.</p>
+    </div>
+    <div class="cause-card">
+      <div class="cause-number">03</div>
+      <div class="cause-title">Unautomated First Principles</div>
+      <p class="cause-desc">Frameworks that are intellectually understood but not yet internalised. Under pressure, you revert to what's automatic — not what you know. The gap shows up exactly when you need it least.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- HOW IT WORKS -->
+<section class="process-section" id="how">
+  <div class="process-header">
+    <p class="hero-eyebrow" style="opacity:1; animation:none; margin-bottom:1rem;">The session</p>
+    <h2>Sixty minutes. One root cause. One tool.</h2>
+  </div>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-time">0 — 15 min</div>
+      <div class="step-title">Grounding</div>
+      <p class="step-desc">We establish exactly what's happening. Not the backstory — the specific moment where the block shows up. We isolate the trigger.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-time">15 — 40 min</div>
+      <div class="step-title">Simulation</div>
+      <p class="step-desc">We recreate the condition. You experience the block live, in a low-stakes space. This makes the root cause visible — not hypothetical.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-time">40 — 55 min</div>
+      <div class="step-title">Root Cause</div>
+      <p class="step-desc">We name it precisely. Not vaguely. Cognitive overload, self-monitoring, or unautomated principles — each has a different fix.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-time">55 — 60 min</div>
+      <div class="step-title">One Tool</div>
+      <p class="step-desc">You leave with one thing. Not a list. One repeatable approach built around how you specifically think — that holds in live situations.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-section">
+  <div class="testimonial-inner">
+    <p class="testimonial-quote">"No generic frameworks. It's built around how you specifically think. That one conversation paid for itself many times over."</p>
+    <div class="testimonial-divider"></div>
+    <p class="testimonial-attr">Tripti Sharma — Founder, Agency Business</p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-content">
+    <h2>One session.<br>One investment.</h2>
+    <p>A clarity call is a high-leverage intervention. It works in one session because it targets the root cause — not the symptom. There's no programme, no ongoing commitment, no upsell.</p>
+    <p>If something shifts for you in that hour — and it will — you'll know exactly why, and exactly what to do next. That's the only outcome we're optimising for.</p>
+  </div>
+  <div class="pricing-card">
+    <div class="price-amount">₹6,000</div>
+    <div class="price-sub">Per session · 60 minutes</div>
+    <ul class="price-includes">
+      <li>One private, one-on-one clarity call</li>
+      <li>Live simulation of your specific block</li>
+      <li>Root cause identification</li>
+      <li>One personalised, repeatable tool</li>
+      <li>24-hour follow-up check-in</li>
+      <li>Complete confidentiality, always</li>
+    </ul>
+    <a href="https://calendly.com/sthirclarity/sthirclarity-clarity-call" class="btn-primary" style="display:block; text-align:center; width:100%;">Book Your Session</a>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ABOUT -->
+<section class="about-section">
+  <div class="about-content">
+    <h2>About Atharv</h2>
+    <p>I run SthirClarity as a personal practice alongside my consulting work. I work with founders, consultants, analysts, and professionals who are already capable — and are frustrated that their performance doesn't always reflect that.</p>
+    <p>I'm not a therapist and this isn't coaching. It's a structured, diagnostic conversation designed to surface what's actually in the way — and replace it with something that works.</p>
+    <p>Every session is private. Every client gets their own SthirClarity name — a Sanskrit word chosen after the call that reflects what shifted for them. It's a small ritual, but it matters.</p>
+  </div>
+  <div class="about-stat">
+    <span class="stat-number">1</span>
+    <span class="stat-label">Call is all it takes</span>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <p class="cta-eyebrow">Ready to find out what's in the way?</p>
+  <h2 class="cta-headline">
+    The clarity you're looking for<br>
+    is <em>one conversation away.</em>
+  </h2>
+  <a href="https://calendly.com/sthirclarity/sthirclarity-clarity-call" class="btn-primary">Book Your Clarity Call — ₹6,000</a>
+  <p class="cta-note">Sessions available after 15th of each month · Limited slots · Complete confidentiality</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Sthir<span>Clarity</span></div>
+  <ul class="footer-links">
+    <li><a href="/cdn-cgi/l/email-protection#017275696873626d607368757841666c60686d2f626e6c">Contact</a></li>
+    <li><a href="https://calendly.com/sthirclarity/sthirclarity-clarity-call">Book</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 SthirClarity · A

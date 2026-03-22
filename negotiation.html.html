@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Negotiation Fundamentals — SthirClarity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0A0A08;
+  --bg2: #111110;
+  --bg3: #161614;
+  --text: #F5F2EC;
+  --muted: #8A8780;
+  --gold: #B89355;
+  --gold-light: #D4AF7A;
+  --divider: rgba(138,135,128,0.2);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem; height: 64px;
+  background: rgba(10,10,8,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--divider);
+}
+.nav-logo { font-family: var(--serif); font-weight: 300; font-size: 19px; color: var(--text); text-decoration: none; letter-spacing: 0.04em; }
+.nav-center { display: flex; gap: 2rem; position: absolute; left: 50%; transform: translateX(-50%); }
+.nav-center a { font-size: 11px; font-weight: 400; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+.nav-center a:hover { color: var(--text); }
+.nav-cta { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #0A0A08; background: var(--gold); padding: 10px 22px; text-decoration: none; transition: background 0.2s; }
+.nav-cta:hover { background: var(--gold-light); }
+
+/* HERO */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 3rem 6rem; position: relative; border-bottom: 1px solid var(--divider); overflow: hidden;
+}
+.hero-grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: linear-gradient(rgba(138,135,128,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(138,135,128,0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+.hero-glow { position: absolute; top: 30%; left: 40%; width: 700px; height: 700px; background: radial-gradient(circle, rgba(184,147,85,0.05) 0%, transparent 70%); z-index: 0; pointer-events: none; }
+.hero-content { position: relative; z-index: 2; max-width: 1000px; }
+.hero-label {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 2rem; display: flex; align-items: center; gap: 14px;
+  opacity: 0; animation: fadeUp 0.9s ease 0.1s forwards;
+}
+.hero-label::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); opacity: 0.5; }
+.hero h1 {
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(3.5rem, 8vw, 7rem); line-height: 1.0; letter-spacing: -0.02em; color: var(--text);
+  margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.9s ease 0.25s forwards;
+}
+.hero h1 em { font-style: italic; color: var(--gold-light); }
+.hero-meta {
+  display: flex; align-items: center; gap: 3rem; flex-wrap: wrap;
+  padding-top: 2.5rem; border-top: 1px solid var(--divider);
+  opacity: 0; animation: fadeUp 0.9s ease 0.4s forwards;
+}
+.hero-meta-label { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+.hero-meta-val { font-size: 14px; font-weight: 300; color: var(--muted); }
+.hero-cta { margin-left: auto; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #0A0A08; background: var(--gold); padding: 14px 32px; text-decoration: none; transition: background 0.2s; white-space: nowrap; }
+.hero-cta:hover { background: var(--gold-light); }
+
+/* SHARED */
+.sec { padding: 7rem 3rem; border-bottom: 1px solid var(--divider); }
+.sec-inner { max-width: 1100px; margin: 0 auto; }
+.sec-label { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 14px; }
+.sec-label::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); opacity: 0.5; }
+.sec-h { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 3rem; }
+.sec-h em { font-style: italic; color: var(--gold-light); }
+
+/* PHILOSOPHY */
+.phi-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--divider); }
+.phi-card { padding: 2.5rem; border-right: 1px solid var(--divider); transition: background 0.2s; }
+.phi-card:last-child { border-right: none; }
+.phi-card:hover { background: var(--bg2); }
+.phi-n { font-family: var(--serif); font-size: 2.5rem; font-weight: 300; color: rgba(184,147,85,0.18); line-height: 1; margin-bottom: 1rem; letter-spacing: -0.04em; }
+.phi-t { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 0.6rem; }
+.phi-b { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+/* DEFINITION */
+.def-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; align-items: start; }
+.def-quote { font-family: var(--serif); font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 300; font-style: italic; line-height: 1.3; color: var(--text); padding-left: 2rem; border-left: 2px solid var(--gold); margin-bottom: 1.5rem; }
+.def-attr { font-size: 11px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); padding-left: 2rem; }
+.def-word { padding: 1.25rem 0; border-bottom: 1px solid var(--divider); }
+.def-word:first-child { border-top: 1px solid var(--divider); }
+.def-term { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+.def-meaning { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.65; }
+
+/* MODULES */
+.module-list { display: flex; flex-direction: column; }
+.module-item { border-bottom: 1px solid var(--divider); cursor: pointer; transition: background 0.2s; overflow: hidden; }
+.module-item:first-child { border-top: 1px solid var(--divider); }
+.module-item:hover { background: var(--bg2); }
+.module-head { display: grid; grid-template-columns: 72px 1fr 40px; align-items: start; padding: 2rem 0; }
+.module-n { font-family: var(--serif); font-size: 2.25rem; font-weight: 300; color: rgba(184,147,85,0.22); letter-spacing: -0.04em; line-height: 1; padding-top: 4px; }
+.module-title { font-size: 18px; font-weight: 400; color: var(--text); letter-spacing: -0.01em; margin-bottom: 0.35rem; transition: color 0.2s; }
+.module-item:hover .module-title { color: var(--gold-light); }
+.module-desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.6; max-width: 680px; }
+.module-plus { font-size: 18px; color: var(--muted); transition: transform 0.3s, color 0.2s; padding-top: 2px; }
+.module-item.open .module-plus { transform: rotate(45deg); color: var(--gold); }
+
+/* LESSON CONTENT */
+.module-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.6s ease;
+  padding: 0 0 0 72px;
+}
+.module-item.open .module-body { max-height: 9999px; }
+.lesson-block {
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--divider);
+  max-width: 720px;
+}
+.lesson-label { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; opacity: 0.8; }
+.lesson-title { font-family: var(--serif); font-size: 22px; font-weight: 300; color: var(--text); letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 1.25rem; }
+.lesson-body { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+.lesson-body strong { color: var(--text); font-weight: 400; }
+.lesson-body em { font-style: italic; color: var(--gold-light); }
+.lesson-pull {
+  margin: 1.5rem 0; padding: 1.5rem 1.5rem 1.5rem 1.75rem;
+  border-left: 2px solid var(--gold);
+  background: var(--bg2);
+}
+.lesson-pull p { font-family: var(--serif); font-size: 18px; font-weight: 300; font-style: italic; color: var(--text); line-height: 1.45; }
+.lesson-formula {
+  margin: 1.25rem 0; padding: 1rem 1.5rem;
+  border: 1px solid rgba(184,147,85,0.25);
+  background: var(--bg3);
+}
+.lesson-formula p { font-size: 14px; font-weight: 400; color: var(--gold-light); letter-spacing: 0.01em; line-height: 1.6; }
+.lesson-subhead { font-size: 14px; font-weight: 500; color: var(--text); margin: 1.25rem 0 0.5rem; letter-spacing: -0.01em; }
+.lesson-list { list-style: none; margin: 0.75rem 0; }
+.lesson-list li { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; padding: 0.3rem 0 0.3rem 1.25rem; position: relative; }
+.lesson-list li::before { content: '—'; position: absolute; left: 0; color: var(--gold); opacity: 0.5; }
+
+/* PRINCIPLES */
+.principles-bg { background: var(--bg2); }
+.p-grid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--divider); }
+.p-card { padding: 2.5rem; border-right: 1px solid var(--divider); border-bottom: 1px solid var(--divider); transition: background 0.2s; }
+.p-card:hover { background: var(--bg3); }
+.p-card:nth-child(2n) { border-right: none; }
+.p-card.full { grid-column: 1/-1; border-right: none; border-bottom: none; }
+.p-num { font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; opacity: 0.8; }
+.p-title { font-family: var(--serif); font-size: 19px; font-weight: 300; color: var(--text); line-height: 1.3; letter-spacing: -0.01em; margin-bottom: 0.75rem; }
+.p-body { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+.p-lever { margin-top: 0.85rem; font-size: 12px; font-weight: 400; color: var(--gold); font-style: italic; opacity: 0.75; }
+
+/* TWO CONVERSATIONS */
+.conv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+.conv-card { padding: 2.5rem; border: 1px solid var(--divider); transition: border-color 0.2s; }
+.conv-card:hover { border-color: rgba(184,147,85,0.3); }
+.conv-card-label { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+.conv-card-title { font-family: var(--serif); font-size: 20px; font-weight: 300; color: var(--text); margin-bottom: 0.6rem; }
+.conv-card-body { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+.conv-insight { padding: 2.5rem; background: var(--bg2); border-left: 2px solid var(--gold); }
+.conv-insight-q { font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 300; font-style: italic; color: var(--text); line-height: 1.45; margin-bottom: 1rem; }
+.conv-insight-a { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+/* PERSONALITY REFRAME */
+.pers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+.pers-body { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+.pers-body strong { color: var(--text); font-weight: 400; }
+.pers-card { padding: 2.5rem; border: 1px solid var(--divider); background: var(--bg2); }
+.pers-card-label { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+.pers-row { display: flex; gap: 1rem; align-items: baseline; padding: 0.85rem 0; border-bottom: 1px solid var(--divider); }
+.pers-row:last-child { border-bottom: none; }
+.pers-bad { font-size: 13px; font-weight: 300; color: rgba(138,135,128,0.45); text-decoration: line-through; min-width: 140px; }
+.pers-arr { color: var(--gold); font-size: 12px; }
+.pers-good { font-size: 13px; font-weight: 400; color: var(--text); }
+
+/* CTA */
+.cta-inner { text-align: center; }
+.cta-label { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 14px; }
+.cta-label::before, .cta-label::after { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); opacity: 0.4; }
+.cta-h { font-family: var(--serif); font-weight: 300; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+.cta-h em { font-style: italic; color: var(--gold-light); }
+.cta-b { font-size: 16px; font-weight: 300; color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7; }
+.cta-btns { display: flex; gap: 1.5rem; justify-content: center; align-items: center; flex-wrap: wrap; }
+.btn-gold { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #0A0A08; background: var(--gold); padding: 15px 36px; text-decoration: none; transition: background 0.2s; }
+.btn-gold:hover { background: var(--gold-light); }
+.btn-ghost { font-size: 13px; font-weight: 300; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.btn-ghost:hover { color: var(--text); }
+
+/* FOOTER */
+footer { padding: 3rem; border-top: 1px solid var(--divider); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+.footer-logo { font-family: var(--serif); font-weight: 300; font-size: 18px; color: var(--text); text-decoration: none; opacity: 0.7; letter-spacing: 0.04em; }
+.footer-links { display: flex; gap: 2rem; }
+.footer-links a { font-size: 11px; font-weight: 400; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { font-size: 11px; font-weight: 300; color: rgba(138,135,128,0.35); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+
+/* MOBILE */
+@media (max-width: 860px) {
+  nav { padding: 0 1.5rem; }
+  .nav-center { display: none; }
+  .hero, .sec { padding: 4rem 1.5rem; }
+  .phi-grid { grid-template-columns: 1fr; }
+  .phi-card { border-right: none; border-bottom: 1px solid var(--divider); }
+  .def-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .p-grid { grid-template-columns: 1fr; }
+  .p-card { border-right: none; }
+  .conv-grid { grid-template-columns: 1fr; }
+  .pers-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .module-head { grid-template-columns: 52px 1fr 32px; }
+  .module-body { padding-left: 52px; }
+  footer { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">SthirClarity</a>
+  <div class="nav-center">
+    <a href="/">Home</a>
+    <a href="#modules">Course</a>
+    <a href="#principles">Principles</a>
+    <a href="https://calendly.com/sthirclarity/sthirclarity-clarity-call" target="_blank">Book a Call</a>
+  </div>
+  <a href="https://calendly.com/sthirclarity/sthirclarity-clarity-call" target="_blank" class="nav-cta">Book a Session</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <p class="hero-label">SthirClarity · Free Course</p>
+    <h1>The Negotiation<br><em>Fundamentals</em></h1>
+    <div class="hero-meta">
+      <div><div class="hero-meta-label">Modules</div><div class="hero-meta-val">6 modules · 25 lessons</div></div>
+      <div><div class="hero-meta-label">Format</div><div class="hero-meta-val">Self-paced · Read online</div></div>
+      <div><div class="hero-meta-label">For</div><div class="hero-meta-val">Class 8 student to Fortune 500 CEO</div></div>
+      <div><div class="hero-meta-label">Cost</div><div class="hero-meta-val">Free. Always.</div></div>
+      <a href="#modules" class="hero-cta">Start Learning →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-label reveal">Why this course exists</div>
+    <h2 class="sec-h reveal">Not tactics. Not scripts. <em>Understanding.</em></h2>
+    <div class="phi-grid">
+      <div class="phi-card reveal"><div class="phi-n">I</div><div class="phi-t">You don't need to be tough</div><p class="phi-b">The strongest negotiators are warm, calm, and deeply curious — not cold, hard, or aggressive. The course is built around that truth.</p></div>
+      <div class="phi-card reveal d1"><div class="phi-n">II</div><div class="phi-t">Tactics follow understanding</div><p class="phi-b">Once you understand why humans behave the way they do under pressure, the right move becomes obvious in the moment. You won't need a script.</p></div>
+      <div class="phi-card reveal d2"><div class="phi-n">III</div><div class="phi-t">Your style is the method</div><p class="phi-b">There is no single correct way. This course gives you the foundation. You build your own approach on top — suited to your personality, your context, your situations.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEFINITION -->
+<section class="sec" style="background: var(--bg2);">
+  <div class="sec-inner">
+    <div class="def-grid">
+      <div class="reveal">
+        <div class="sec-label">The real definition</div>
+        <div class="def-quote">"Negotiation is the structured management of competing interests under uncertainty, toward a mutually acceptable outcome."</div>
+        <div class="def-attr">The definition this course is built on</div>
+      </div>
+      <div class="reveal">
+        <div class="def-word"><div class="def-term">Structured</div><p class="def-meaning">It has a shape, a sequence, a geometry. Even informal negotiations have structure — whether you're aware of it or not. The person who is aware of the structure has an enormous advantage over the person who isn't.</p></div>
+        <div class="def-word"><div class="def-term">Management</div><p class="def-meaning">You are not winning a negotiation. You are managing a dynamic. The moment you think of it as winning versus losing, you've already made it harder than it needs to be.</p></div>
+        <div class="def-word"><div class="def-term">Competing interests</div><p class="def-meaning">Not competing positions. Two people can have completely opposite positions and yet completely compatible interests. This is the most important distinction in all of negotiation.</p></div>
+        <div class="def-word"><div class="def-term">Under uncertainty</div><p class="def-meaning">You never have complete information. Neither does the other side. Negotiation happens in the fog. Learning to move well in that fog is the skill.</p></div>
+        <div class="def-word"><div class="def-term">Mutually acceptable</div><p class="def-meaning">A deal that one side resents is not a deal — it's a ticking clock. Even in a hard negotiation, the outcome has to work for both sides at some level, or it doesn't hold.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="sec" id="modules">
+  <div class="sec-inner">
+    <div class="sec-label reveal">The course</div>
+    <h2 class="sec-h reveal">Six modules. Every lesson, written in full.<br><em>Click any module to read it.</em></h2>
+    <div class="module-list">
+
+      <!-- MODULE 1 -->
+      <div class="module-item reveal" onclick="toggleModule(this)">
+        <div class="module-head">
+          <div class="module-n">01</div>
+          <div><div class="module-title">What negotiation actually is</div><div class="module-desc">Most people get the definition wrong. That single mistake costs them every negotiation that follows.</div></div>
+          <div class="module-plus">+</div>
+        </div>
+        <div class="module-body">
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 1.1</div>
+            <div class="lesson-title">The real definition of negotiation</div>
+            <p class="lesson-body">Let's start with a question: what do you think negotiation is? Most people, if they're honest, will say something like: <em>"It's when two people want different things and they talk until they agree."</em> Or: <em>"It's convincing someone to come to your side."</em></p>
+            <p class="lesson-body">All of those answers are understandable. And all of them are slightly wrong in ways that matter enormously.</p>
+            <div class="lesson-pull"><p>"Negotiation is the structured management of competing interests under uncertainty, toward a mutually acceptable outcome."</p></div>
+            <p class="lesson-body">Every word is load-bearing. <strong>Structured</strong> — it has a shape, a sequence, a geometry. <strong>Management</strong> — you are not winning. You are managing a dynamic. <strong>Competing interests</strong> — not positions. <strong>Under uncertainty</strong> — you never have complete information. <strong>Mutually acceptable</strong> — a deal that one side resents is not a deal. It's a ticking clock.</p>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 1.2</div>
+            <div class="lesson-title">The two conversations in every negotiation</div>
+            <p class="lesson-body">Every single negotiation has two conversations happening at the same time.</p>
+            <p class="lesson-body"><strong>The surface conversation</strong> is what you can hear: price, terms, timeline, scope.</p>
+            <p class="lesson-body"><strong>The real conversation</strong> is what you can feel but rarely see stated: power, fear, pride, identity, ego, trust, status.</p>
+            <div class="lesson-formula"><p>The surface conversation is always a symptom of the real conversation. Weak negotiators manage the surface. Strong negotiators diagnose the real conversation first — then respond to that.</p></div>
+            <p class="lesson-body">When a client says <em>"your price is too high"</em> — that's a surface statement. The real conversation could be: fear of commitment, needing to feel they won something, not yet believing you can deliver, or needing a story to tell their partner. Every single one requires a completely different response. If you only hear the surface, you'll lower your price when what they actually needed was reassurance.</p>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 1.3</div>
+            <div class="lesson-title">The five non-negotiable first principles</div>
+            <p class="lesson-body">These are true in every negotiation, everywhere, always. Not guidelines. Not suggestions. Foundations.</p>
+            <div class="lesson-subhead">1 — Value is always perceived, never absolute</div>
+            <p class="lesson-body">Nothing has a fixed worth. Your job is never to prove real value. It is to shape perceived value. Price resistance is almost always a perception problem, not a math problem.</p>
+            <div class="lesson-subhead">2 — The person with the least fear of walking away holds all the power</div>
+            <p class="lesson-body">Power flows to the person who needs this deal less. Building your BATNA — your best alternative if this deal doesn't happen — is not a tactical exercise. It is the foundation of your entire negotiating posture.</p>
+            <div class="lesson-subhead">3 — Information asymmetry is the actual game</div>
+            <p class="lesson-body">Most people think negotiation is about talking well. It is actually about knowing more than the other side knows you know. The negotiation is largely decided before the first word is spoken — in the research phase.</p>
+            <div class="lesson-subhead">4 — Whoever sets the first number sets the gravity of the room</div>
+            <p class="lesson-body">The anchor — the first number or framing introduced — becomes the magnetic centre of everything that follows. The person who anchors boldly and confidently controls the reference point for the entire conversation.</p>
+            <div class="lesson-subhead">5 — Position is what people say they want. Interest is what they actually need.</div>
+            <p class="lesson-body">Position-level thinking produces deadlocks. Interest-level thinking produces solutions. This is the master key — and it gets its own lesson in Module 2.</p>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 1.4</div>
+            <div class="lesson-title">When does a negotiation actually begin?</div>
+            <p class="lesson-body">Most people think the negotiation begins when someone makes an offer, or when two parties sit down to talk. It doesn't.</p>
+            <div class="lesson-pull"><p>The negotiation begins the moment one party becomes aware that there is something to be negotiated.</p></div>
+            <p class="lesson-body">Which means: the way you carry yourself before the conversation. The way you respond to the first email. Whether you seem available or scarce. Whether you follow up in ten minutes or two days. All of that is negotiation. All of it is being read.</p>
+            <p class="lesson-body">The other side is forming a picture of your power, your options, and your need — before a single term has been discussed. That picture will shape everything they offer you and how hard they push. The negotiation has already started. The only question is whether you were present for the beginning of it.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 2 -->
+      <div class="module-item reveal" onclick="toggleModule(this)">
+        <div class="module-head">
+          <div class="module-n">02</div>
+          <div><div class="module-title">The human on the other side</div><div class="module-desc">You're never negotiating with a rational agent. You're negotiating with a human brain under pressure — and that changes everything.</div></div>
+          <div class="module-plus">+</div>
+        </div>
+        <div class="module-body">
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 2.1</div>
+            <div class="lesson-title">Loss aversion: the most powerful force in any negotiation</div>
+            <p class="lesson-body">Daniel Kahneman proved something that changes everything: <strong>losing something feels approximately twice as painful as gaining the same thing feels good.</strong> A ₹1 lakh loss hurts more than a ₹1 lakh gain feels rewarding. Not metaphorically — neurologically.</p>
+            <p class="lesson-body">Most people pitch gains. Strong negotiators flip the frame entirely — they make the cost of not acting more vivid than the promise of acting.</p>
+            <div class="lesson-pull"><p>Not: "Our system will save you 10 hours a week." But: "Right now, without this, you're losing 10 hours every single week. That's 480 hours a year — money you've already earned, bleeding out."</p></div>
+            <div class="lesson-formula"><p>The formula: Make the cost of the status quo more vivid than the promise of the solution.</p></div>
+            <p class="lesson-body">This is not manipulation. If a problem genuinely exists, you're not inventing the loss — you're making it visible. There's a difference. One important nuance: loss aversion can backfire if overdone. The framing should feel like you're on their side, pointing out a problem together — not using their fear against them.</p>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 2.2</div>
+            <div class="lesson-title">Ego and identity: the invisible person in the room</div>
+            <p class="lesson-body">People will sacrifice material outcomes to protect their sense of self. A client will reject a better-fit proposal because accepting it would mean admitting someone else was wrong. A partner will refuse a tool that saves him ten hours a week because adopting it feels like admitting inefficiency.</p>
+            <p class="lesson-body"><strong>The ego is always present. It never introduces itself.</strong></p>
+            <p class="lesson-body">The most common way ego kills deals: the other side states a position early, publicly, and any movement away from it feels like losing face. They become more committed to their position than to their actual interest.</p>
+            <div class="lesson-formula"><p>Never make the other side choose between a good deal and their dignity. Always make the deal the dignified choice.</p></div>
+            <p class="lesson-body">Always leave them a face-saving exit. A story they can tell themselves about why they moved. You're not lying for them — you're building them a door. A person with a door will walk through it. A person with no door will push back through a wall.</p>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 2.3</div>
+            <div class="lesson-title">Commitment and consistency: the small yes</div>
+            <p class="lesson-body">Once a person has said yes to something small, they will work very hard to stay consistent with that yes. The brain does not like to contradict itself. Every micro-yes creates psychological momentum toward the macro-yes.</p>
+            <p class="lesson-body">Before you ever discuss price or scope, get agreement on the <em>problem.</em></p>
+            <div class="lesson-pull"><p>"Does this feel like an accurate diagnosis?" If they've agreed the problem is real and serious — they've already started building an internal case for why they need a solution. You're not selling them. They're selling themselves.</p></div>
+            <div class="lesson-formula"><p>The sequence: Problem agreement → solution framing → terms discussion. Always in that order.</p></div>
+            <p class="lesson-body">Jumping to terms before problem agreement is like asking someone to sign a contract before they know why they need one. The sequence shapes the psychology of the entire conversation.</p>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 2.4</div>
+            <div class="lesson-title">Scarcity, social proof, and the uncertain mind</div>
+            <p class="lesson-body"><strong>Scarcity</strong> — People want what they might not be able to have. Availability signals value. A consultant genuinely considering two other engagements is perceived differently than one who is clearly free and eager. Not because the quality changed — because the brain reads scarcity as a proxy for worth.</p>
+            <p class="lesson-body">Note the word genuinely. Manufactured scarcity is easy to detect, and when detected, it destroys trust permanently. Real scarcity, honestly communicated, is one of the most powerful signals you have.</p>
+            <p class="lesson-body"><strong>Social proof</strong> — Under uncertainty, people look sideways. <em>Who else is using this? Who similar to me has already decided yes?</em> The brain is saying: I don't have enough information to evaluate this alone, so I'll use others' judgements as data. The names you drop, the clients you reference, the results others have seen — all of it is doing psychological work before you say a word about price.</p>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 2.5</div>
+            <div class="lesson-title">Position vs. interest: the master key</div>
+            <p class="lesson-body">A <strong>position</strong> is what someone says they want. An <strong>interest</strong> is what they actually need. They are almost never the same thing.</p>
+            <p class="lesson-body">Two people argue over an orange — both want the whole orange. That's the position. But one wants the fruit to eat, the other wants the zest to bake. They can both have everything they actually need. The position-level negotiation splits the orange and leaves both with half of what they wanted. The interest-level conversation gives both everything.</p>
+            <div class="lesson-formula"><p>When someone says "I can't go above ₹2 lakhs" — that's a position. The interest underneath might be budget certainty, needing to justify to a partner, or risk from a past bad experience. Each one opens a completely different path forward.</p></div>
+            <p class="lesson-body">How to find the interest: Ask <em>why</em> — gently. <em>"Help me understand what's driving that for you."</em> Or: <em>"What would the ideal outcome look like on your end?"</em> People will tell you their interests if you ask the right way. Most negotiators never ask.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 3 -->
+      <div class="module-item reveal" onclick="toggleModule(this)">
+        <div class="module-head">
+          <div class="module-n">03</div>
+          <div><div class="module-title">The human you're negotiating as</div><div class="module-desc">Your own psychology is the game you haven't been playing. Your anxiety, ego, and attachment decide outcomes before you open your mouth.</div></div>
+          <div class="module-plus">+</div>
+        </div>
+        <div class="module-body">
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 3.1</div>
+            <div class="lesson-title">Attachment to outcome: your biggest liability</div>
+            <div class="lesson-pull"><p>The moment you need a deal more than the other side does, you have already lost most of your power.</p></div>
+            <p class="lesson-body">Not all of it. But most of it. And the worst part — the other side can feel it. Not always consciously. But the energy of need is readable. It comes through in how quickly you respond, how much you over-explain, how fast you make concessions.</p>
+            <p class="lesson-body">This is why BATNA is not a tactical concept. It is the foundation of your psychological posture. <strong>Your BATNA is the answer to: if this deal falls apart completely, what do I do?</strong> The stronger your answer, the less you need this deal. The less you need this deal, the calmer you are. The calmer you are, the more power you project.</p>
+            <div class="lesson-formula"><p>The goal: want this deal, but not need it. That distinction — want versus need — is everything. It allows you to stay warm and engaged while remaining unattached to the outcome.</p></div>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 3.2</div>
+            <div class="lesson-title">Three patterns that kill deals</div>
+            <div class="lesson-subhead">Pattern 1: The Over-Explainer</div>
+            <p class="lesson-body">Someone raises a concern. Instead of sitting with it, the over-explainer floods the conversation with justification. What they're really doing is trying to outrun their anxiety by talking. Over-explaining signals insecurity and gives the other side more material to push back on.</p>
+            <div class="lesson-formula"><p>The fix: Say less. State your position clearly, once. Then stop. Let silence do the work.</p></div>
+            <div class="lesson-subhead">Pattern 2: The Folder</div>
+            <p class="lesson-body">Someone pushes back — firmly but not aggressively — and the folder immediately adjusts. Not because there was a good reason to, but because holding ground felt unbearable. Most pushback in negotiation is a test, not a genuine objection. If you fold at the first sign of pressure, you confirm that your positions are not real.</p>
+            <div class="lesson-formula"><p>The fix: When someone pushes back, your first response is not to move. It's to understand. "Help me understand your concern."</p></div>
+            <div class="lesson-subhead">Pattern 3: The People-Pleaser</div>
+            <p class="lesson-body">The people-pleaser reads the emotional temperature of the room and adjusts their position to match it. If the other side seems unhappy, they make an offer to improve the mood. Making someone feel good in the moment and getting a good deal are two different objectives — and they frequently conflict.</p>
+            <div class="lesson-formula"><p>The fix: Separate relationship management from deal management. You can be warm and caring — while still holding your position on the terms. These are not the same thing.</p></div>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 3.3</div>
+            <div class="lesson-title">Warmth without need: the most powerful state</div>
+            <p class="lesson-body">Cold, aggressive negotiators are predictable. People prepare for them, harden against them, and often walk away — not because the deal was bad, but because the interaction felt unpleasant. They win battles and lose relationships.</p>
+            <p class="lesson-body"><strong>Warm, considered negotiators do something far more powerful.</strong> They make the other side feel safe enough to be honest. And when someone is honest with you about what they actually need — that information is worth more than any tactic.</p>
+            <p class="lesson-body">Your warmth is not weakness. It is an intelligence-gathering tool of extraordinary power. A person who feels comfortable with you will share their real constraints, their actual deadline, what they're afraid of, what they're optimising for.</p>
+            <div class="lesson-formula"><p>Train the detachment. Keep the warmth. Warmth without need is the most advanced negotiating state there is.</p></div>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 3.4</div>
+            <div class="lesson-title">Managing your nervous system in the room</div>
+            <p class="lesson-body">Your body is negotiating before your mouth opens. The pace at which you speak. Whether you fill silences or sit in them. Whether your breathing is shallow or steady when the number is on the table.</p>
+            <div class="lesson-formula"><p>Slow is confident. Fast is anxious.</p></div>
+            <p class="lesson-body">The single most practical thing you can do: <strong>add one beat of silence before every response.</strong> Not a long silence — just one breath. That pause slows the conversation to a pace where you're in control, signals that you're thinking not reacting, and gives you actual time to think.</p>
+            <div class="lesson-pull"><p>When you make an offer — stop talking. Do not fill the silence that follows. Do not explain the number. Do not soften it. Say the number and be quiet. The first person who speaks after an offer usually makes a concession. Let it be them.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 4 -->
+      <div class="module-item reveal" onclick="toggleModule(this)">
+        <div class="module-head">
+          <div class="module-n">04</div>
+          <div><div class="module-title">Building the deal before it starts</div><div class="module-desc">The negotiation is largely won or lost before anyone speaks. Architecture — how deals are structured, not just discussed.</div></div>
+          <div class="module-plus">+</div>
+        </div>
+        <div class="module-body">
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 4.1</div>
+            <div class="lesson-title">BATNA and ZOPA: the geometry of every deal</div>
+            <p class="lesson-body"><strong>BATNA — Best Alternative to a Negotiated Agreement.</strong> Your BATNA is what you do if this deal falls apart. Not what you hope happens — what you will actually do. The stronger your BATNA, the more power you have. Before every significant negotiation, write it down explicitly. Then ask: is it strong? If it's weak — improve it before you negotiate.</p>
+            <p class="lesson-body">The other side has a BATNA too. Your job is to understand it. The weaker their alternative, the more flexibility they have to come toward you.</p>
+            <p class="lesson-body"><strong>ZOPA — Zone of Possible Agreement.</strong> The ZOPA is the range where a deal can actually happen — between the minimum one side will accept and the maximum the other side will offer. If your ZOPA doesn't exist, there's no deal to be made, and the faster you both know that, the better. If it does exist, the negotiation is about where within it the deal lands — determined by anchoring, information, and patience.</p>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 4.2</div>
+            <div class="lesson-title">Anchoring: whoever speaks first shapes everything</div>
+            <p class="lesson-body">The anchor is the first number or framing introduced. It exerts gravitational pull on every number that follows. This is documented cognitive bias — even arbitrary anchors influence final outcomes. The brain uses the first number as a reference point and adjusts from there. The adjustment is almost always insufficient. The anchor sticks.</p>
+            <div class="lesson-pull"><p>A ₹5 lakh ask, met with a ₹3 lakh counter, lands at ₹4 lakhs. A ₹3 lakh ask, met with a ₹2 lakh counter, lands at ₹2.5 lakhs. The anchor is the difference.</p></div>
+            <p class="lesson-body">Anchor first when you can. Anchor boldly. State the number clearly, without apology, with a brief rationale — then stop. Don't soften it. Don't say "I know this seems high but..." — that signals you yourself don't fully believe the number. Say it like it's the most natural thing in the world.</p>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 4.3</div>
+            <div class="lesson-title">The multi-variable deal: escaping one dimension</div>
+            <p class="lesson-body">Most people negotiate one variable at a time — usually price. When a negotiation is only about price, it becomes zero-sum. Every rupee you gain, they lose. The moment you introduce multiple variables, the game changes entirely.</p>
+            <p class="lesson-body">Other variables in almost every deal: payment terms, timeline, scope, exclusivity, referrals, IP ownership, revision limits, retainer vs. project, reporting frequency, renewal terms.</p>
+            <div class="lesson-formula"><p>The key insight: different variables have completely different values to different people. Something that costs you very little might be worth a great deal to them — and vice versa. You give up what's cheap for you. You get what's precious to you.</p></div>
+            <p class="lesson-body">Both sides walk away feeling like they won — because they did. This is not compromise. It's the creation of value that didn't exist in a one-dimensional negotiation.</p>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 4.4</div>
+            <div class="lesson-title">Sequencing: what to discuss in what order</div>
+            <p class="lesson-body">The order in which issues are raised shapes the psychology of the entire conversation. Most people raise issues as they come to mind. Strong negotiators choose the sequence deliberately.</p>
+            <ul class="lesson-list">
+              <li>Start with agreement, not disagreement. Begin with issues where you're aligned. Build momentum first.</li>
+              <li>Get the important things early. Later in a negotiation, people are tired or mentally already closed the deal.</li>
+              <li>Never isolate price. Price raised alone becomes the entire negotiation. Price raised as one of several variables — after scope, after timeline, after relationship — lands in a completely different context.</li>
+              <li>Use conditionals: "If we could agree on X, would you be comfortable with Y?" This tests trades without committing to them.</li>
+            </ul>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 4.5</div>
+            <div class="lesson-title">Information: the real game</div>
+            <p class="lesson-body">Before you enter any negotiation, you are already playing — in the intelligence-gathering phase. Most people skip it entirely.</p>
+            <p class="lesson-body"><strong>What you want to know before you negotiate:</strong> their real constraints (budget, timeline, internal politics), the strength of their BATNA, what happened the last time they did this, and what they care about that they haven't said.</p>
+            <p class="lesson-body"><strong>How to gather it:</strong> In the discovery conversation, ask open questions. Listen to what they emphasise, what they gloss over, what makes them lean forward. During the negotiation, use calibrated questions: <em>"Help me understand what's driving that."</em> <em>"What would make this feel like the right decision?"</em></p>
+            <div class="lesson-formula"><p>The person who knows more wins more. Not because they're smarter — but because they're playing the actual game, not the surface version of it.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 5 -->
+      <div class="module-item reveal" onclick="toggleModule(this)">
+        <div class="module-head">
+          <div class="module-n">05</div>
+          <div><div class="module-title">What you actually do in the room</div><div class="module-desc">The tactical layer. Once strategy and psychology are understood, these become natural extensions of who you are.</div></div>
+          <div class="module-plus">+</div>
+        </div>
+        <div class="module-body">
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 5.1</div>
+            <div class="lesson-title">Silence: the most underused tool</div>
+            <p class="lesson-body">Let's be precise: silence is not the absence of negotiation. It is an active negotiating move. When you make an offer and stay silent, you are refusing to negotiate against yourself.</p>
+            <p class="lesson-body"><strong>The pattern most people fall into:</strong> Make an offer. See a frown on the other side's face. Interpret it as rejection. Immediately offer to move — before they've said a word. You've just made a concession in response to a facial expression. The other side has learned that pressure (even imagined pressure) will move you.</p>
+            <div class="lesson-pull"><p>Make your offer. Stop talking. Hold eye contact. Breathe. Let the silence exist. You don't need to fill it. It belongs to both of you — and whoever feels more compelled to fill it is the one under more pressure. Let it be them.</p></div>
+            <div class="lesson-formula"><p>The person who speaks first after an offer usually makes a concession. Build the discipline of silence.</p></div>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 5.2</div>
+            <div class="lesson-title">Mirroring and labelling: making someone feel heard</div>
+            <p class="lesson-body"><strong>Mirroring</strong> is repeating the last two to four words the other person said, as a question, in a calm tone.</p>
+            <p class="lesson-body"><em>"We just don't have the budget for this right now."</em><br><em>"...don't have the budget?"</em></p>
+            <p class="lesson-body">The other person will almost always continue — elaborating, revealing more. The mirror signals: I heard you, tell me more. People respond by giving you exactly what you need — more information about their actual position and the interests beneath it.</p>
+            <p class="lesson-body"><strong>Labelling</strong> is naming what you observe the other side is feeling — without making it a question, without judgment.</p>
+            <p class="lesson-body"><em>"It sounds like there's some hesitation about the timeline."</em><br><em>"It seems like this decision has a lot of pressure attached to it."</em></p>
+            <p class="lesson-body">When you label accurately, the other side feels understood. A person who feels understood becomes less defensive and more willing to engage honestly. Use <em>"It seems like..."</em> or <em>"It sounds like..."</em> — never "I feel like you feel..." which makes it about you.</p>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 5.3</div>
+            <div class="lesson-title">Calibrated questions: asking without demanding</div>
+            <p class="lesson-body">A calibrated question is open-ended — usually beginning with <em>how</em> or <em>what</em> — that invites the other side to think and respond without feeling cornered.</p>
+            <div class="lesson-pull"><p>"How am I supposed to do that?" — asked calmly — refuses a demand without refusing it. It puts the burden of solving the problem on the other side, where it belongs if they're creating the constraint. It opens the conversation while implicitly communicating the same thing as "that's not possible."</p></div>
+            <p class="lesson-body">Other powerful calibrated questions:</p>
+            <ul class="lesson-list">
+              <li>"What's the biggest challenge you're facing with this?" — opens the real conversation</li>
+              <li>"What would make this feel like the right decision for you?" — surfaces the interest</li>
+              <li>"What happens if we don't figure this out?" — invokes loss aversion gently</li>
+              <li>"What would you need to see to feel comfortable moving forward?" — gives you a clear action</li>
+            </ul>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 5.4</div>
+            <div class="lesson-title">The flinch and reading micro-reactions</div>
+            <p class="lesson-body">The flinch is a deliberate, visible reaction of surprise or concern to an offer — designed to shift the anchor before you've said a word. A slight intake of breath, a subtle lean back, a pause before responding. It communicates: <em>that number surprised me, it's not where I expected us to be.</em> Most people will soften their position before you've even countered.</p>
+            <p class="lesson-body">The flinch is not about drama. It's honest reaction — made visible rather than suppressed.</p>
+            <p class="lesson-body"><strong>Reading micro-reactions in reverse:</strong> When you make an offer, watch closely. A genuine flinch tells you the number landed near their limit. Calm acceptance tells you the opposite — you may have under-asked.</p>
+            <p class="lesson-body">Other signals: sudden stillness means processing something significant. Looking away before answering means deciding how much to reveal. Talking faster often means glossing over something they don't want you to focus on. None of these are certainties — but in aggregate, the body tells a story the words often contradict.</p>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 5.5</div>
+            <div class="lesson-title">Framing and reframing in real time</div>
+            <p class="lesson-body">Every offer, every position, every problem has a frame — a context that shapes how it's perceived. The same fee frames completely differently depending on what you put around it:</p>
+            <ul class="lesson-list">
+              <li>"₹3 lakhs for three months of consulting" — sounds like a cost</li>
+              <li>"₹3 lakhs to fix a revenue leak that's costing you ₹8 lakhs a year" — sounds like a return</li>
+              <li>"₹3 lakhs, roughly ₹1 lakh a month — less than one senior hire's monthly cost" — sounds manageable</li>
+            </ul>
+            <p class="lesson-body">Same number. Completely different perception. The frame is doing all the work.</p>
+            <p class="lesson-body"><strong>Reframing when stuck:</strong> <em>"Let's set price aside for a moment and talk about what success looks like at the end of this engagement. If we achieve X, Y, Z — what is that worth to your business?"</em> You've shifted from cost to value. The price conversation, when you return to it, happens against a completely different backdrop.</p>
+            <div class="lesson-formula"><p>The person who controls the frame controls the conversation. And the frame is almost always adjustable — if you know it's there.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 6 -->
+      <div class="module-item reveal" onclick="toggleModule(this)">
+        <div class="module-head">
+          <div class="module-n">06</div>
+          <div><div class="module-title">Advanced play and your own style</div><div class="module-desc">Power imbalances, the long game, when to walk — and how to build a negotiation identity that is genuinely, distinctly yours.</div></div>
+          <div class="module-plus">+</div>
+        </div>
+        <div class="module-body">
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 6.1</div>
+            <div class="lesson-title">Negotiating when you have less power</div>
+            <p class="lesson-body">First: the reframe. Less power is not the same as no power. And power in negotiation is rarely as fixed as it looks from outside.</p>
+            <p class="lesson-body"><strong>The tools of the underdog:</strong></p>
+            <ul class="lesson-list">
+              <li><strong>Information advantage.</strong> The powerful party is often lazy with research. You can't afford that assumption, so you don't make it. That knowledge is leverage, even when size isn't.</li>
+              <li><strong>Walk-away credibility.</strong> The most surprising thing an underdog can do is demonstrate genuine willingness to walk away. The powerful party assumed need. When you remove that assumption — calmly, without drama — the dynamic shifts.</li>
+              <li><strong>Reframing what's being negotiated.</strong> If they want to negotiate on price alone, introduce quality, risk, timeline, relationship. Find the dimension where your offer is genuinely superior — and make that the centre of gravity.</li>
+              <li><strong>Making them feel the cost of losing you.</strong> Make the cost of no-deal visible: "I want to make this work. Because the alternative — for both of us — is starting over."</li>
+            </ul>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 6.2</div>
+            <div class="lesson-title">The long game: relationships as negotiation</div>
+            <p class="lesson-body">Not all negotiations are transactions. Some are conversations that never actually end. In these relationships, every individual negotiation is a chapter in a longer story — and optimising for any single chapter at the expense of the whole story is usually a mistake.</p>
+            <div class="lesson-pull"><p>Concede today on what matters less to you if it builds trust and goodwill that returns compounded over time. Not as a strategy of weakness — as a strategy of investment.</p></div>
+            <p class="lesson-body">If you take the last rupee in every negotiation with a long-term partner, you win the negotiation and slowly hollow out the relationship. The negotiators who build the best long-term outcomes are the ones known for leaving something on the table — for the relationship, for mutual benefit, for the next deal.</p>
+            <div class="lesson-formula"><p>Practical move: identify one concession that costs you little but signals you value the relationship over the transaction. Name it explicitly: "I'm doing this because I want this to be the first of many."</p></div>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 6.3</div>
+            <div class="lesson-title">Knowing when to walk — and how to walk</div>
+            <div class="lesson-pull"><p>The walk is a negotiating move. Not a failure. Not a last resort. A move.</p></div>
+            <p class="lesson-body"><strong>When to walk:</strong> When the deal, as it stands, is worse than your BATNA. When the other side is negotiating in bad faith. When the cost of the relationship is higher than the value of the deal.</p>
+            <p class="lesson-body"><strong>How to walk — with warmth, with specificity, and with a door left open:</strong></p>
+            <div class="lesson-formula"><p>"I've really valued this conversation. I'm not able to make the numbers work on the current terms — but if that changes, I'd love to revisit it."</p></div>
+            <p class="lesson-body">That's a walk. It's not a burn. It preserves the relationship, states your position clearly, and leaves room for them to come back — which they sometimes do, once they've tested the market and found that your position was accurate after all.</p>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 6.4</div>
+            <div class="lesson-title">Building your negotiation identity</div>
+            <p class="lesson-body">The most effective negotiators are not the ones who follow the most tactics. They're the ones who understand the fundamentals so deeply that they've become instinctive — and on top of that foundation, they negotiate in a way that matches their personality.</p>
+            <p class="lesson-body"><strong>Map yourself:</strong> What are your natural strengths? If you're warm and empathetic — you're a natural at drawing out interests. If you're analytical — you're a natural at deal architecture. If you're patient — you're a natural at silence and the long game. Start from your strengths.</p>
+            <p class="lesson-body"><strong>Know your patterns:</strong> Which of the three patterns from Lesson 3.2 — over-explainer, folder, people-pleaser — shows up in you under pressure? Name it specifically. That's your edge to work on — not to eliminate, but to catch before it operates automatically.</p>
+            <p class="lesson-body"><strong>Design your situations:</strong> Know what conditions bring out your best negotiating — and which ones reliably make you worse. Then design your negotiations rather than just endure them.</p>
+          </div>
+          <div class="lesson-block">
+            <div class="lesson-label">Lesson 6.5</div>
+            <div class="lesson-title">The ten principles you now own</div>
+            <p class="lesson-body">These are the permanent carry-aways. True for you in every negotiation, for the rest of your life.</p>
+            <ul class="lesson-list">
+              <li><strong>One.</strong> Negotiation is the structured management of competing interests under uncertainty. Not winning. Managing.</li>
+              <li><strong>Two.</strong> There are always two conversations. Manage the real one.</li>
+              <li><strong>Three.</strong> Value is perceived, not absolute. Your job is to shape perception — honestly.</li>
+              <li><strong>Four.</strong> The person with the least fear of walking away holds the power. Build your BATNA before you negotiate.</li>
+              <li><strong>Five.</strong> Information asymmetry is the real game. Know more than they know you know.</li>
+              <li><strong>Six.</strong> Whoever anchors first shapes everything. Anchor boldly, calmly, and without apology.</li>
+              <li><strong>Seven.</strong> Position is what people say they want. Interest is what they actually need. Work at the level of interest.</li>
+              <li><strong>Eight.</strong> Silence is a move. The first person to speak after an offer usually makes a concession.</li>
+              <li><strong>Nine.</strong> Your personality is not a liability. Warmth without need is the most powerful negotiating state available to you.</li>
+              <li><strong>Ten.</strong> You can always walk. The walk is a move, not a failure. Know your line before you enter the room.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FIRST PRINCIPLES -->
+<section class="sec principles-bg" id="principles">
+  <div class="sec-inner">
+    <div class="sec-label reveal">The bedrock</div>
+    <h2 class="sec-h reveal">Five things that are true in every negotiation, everywhere, <em>always.</em></h2>
+    <div class="p-grid">
+      <div class="p-card reveal"><div class="p-num">Principle 01</div><div class="p-title">Value is always perceived, never absolute</div><p class="p-body">Nothing has a fixed worth. The same engagement is cheap to one client and expensive to another — not because the work changed, but because what they perceive they're getting is different. Your job is never to prove real value. It is to shape perceived value.</p><div class="p-lever">Price resistance is almost always a perception problem, not a math problem.</div></div>
+      <div class="p-card reveal d1"><div class="p-num">Principle 02</div><div class="p-title">The person with the least fear of walking away holds all the power</div><p class="p-body">This is the physics of negotiation. Not charisma. Not seniority. Power flows to the person who needs this deal less. Building your BATNA is not a tactical exercise. It is the foundation of your entire negotiating posture.</p><div class="p-lever">Power is not given. It is built — before you enter the room.</div></div>
+      <div class="p-card reveal"><div class="p-num">Principle 03</div><div class="p-title">Information asymmetry is the actual game</div><p class="p-body">Most people think negotiation is about talking well. It is actually about knowing more than the other side knows you know. The negotiation is largely decided before the first word is spoken — in the research phase.</p><div class="p-lever">The conversation is the visible tip. The research is the iceberg.</div></div>
+      <div class="p-card reveal d1"><div class="p-num">Principle 04</div><div class="p-title">Whoever sets the first number sets the gravity of the room</div><p class="p-body">The anchor becomes the magnetic centre of everything that follows. All movement is adjustment from that point. The person who anchors boldly and confidently controls the reference point for the entire conversation.</p><div class="p-lever">Anchor first. Anchor boldly. Anchor with calm.</div></div>
+      <div class="p-card full reveal"><div class="p-num">Principle 05</div><div class="p-title">Position is what people say they want. Interest is what they actually need.</div><p class="p-body">A landlord says: "I won't lower the rent." A tenant says: "I need a lower rent." Those are positions — and they're incompatible. But the landlord's interest might be a reliable long-term tenant. The tenant's interest might be financial predictability for two years. Suddenly there's an entirely different deal available. Position-level thinking produces deadlocks. Interest-level thinking produces solutions.</p><div class="p-lever">This is the master key. Everything else is mechanics.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TWO CONVERSATIONS -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-label reveal">A deeper look</div>
+    <h2 class="sec-h reveal">Every negotiation has two conversations happening simultaneously.</h2>
+    <div class="conv-grid">
+      <div class="conv-card reveal"><div class="conv-card-label">The surface conversation</div><div class="conv-card-title">What you can hear</div><p class="conv-card-body">Price. Terms. Timeline. Scope. This is the conversation most people prepare for — and it's the wrong one to start with.</p></div>
+      <div class="conv-card reveal d1"><div class="conv-card-label">The real conversation</div><div class="conv-card-title">What you can feel but rarely see</div><p class="conv-card-body">Power. Fear. Pride. Identity. Ego. Trust. Status. This is what's actually driving every move the other side makes — whether they know it or not.</p></div>
+    </div>
+    <div class="conv-insight reveal">
+      <p class="conv-insight-q">"Your price is too high" is a surface statement. What's the real conversation? It could be fear of commitment, needing to feel they won something, not yet believing you can deliver, or needing a story to tell their partner.</p>
+      <p class="conv-insight-a">Every single one requires a completely different response. If you only hear the surface, you'll lower your price when what they actually needed was reassurance. Learn to hear both conversations at once — and respond to the right one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONALITY REFRAME -->
+<section class="sec" style="background: var(--bg2);">
+  <div class="sec-inner">
+    <div class="pers-grid">
+      <div>
+        <div class="sec-label reveal">The reframe</div>
+        <h2 class="sec-h reveal" style="margin-bottom:1.5rem;">Your soft personality is not the problem.<br><em>It's the unweaponised asset.</em></h2>
+        <p class="pers-body reveal">Cold, aggressive negotiators are predictable. They create resistance. <strong>Warm, considered negotiators do something far more powerful</strong> — they make the other side feel safe enough to reveal what they actually need.</p>
+        <p class="pers-body reveal">And once you know what someone actually needs, you can structure a deal that costs you very little but gives them enormous perceived value.</p>
+        <p class="pers-body reveal">The fix is not to become colder. The fix is to develop <strong>emotional non-attachment to the result</strong> while maintaining relational warmth. These are not contradictory — they just need to be separated.</p>
+      </div>
+      <div class="pers-card reveal">
+        <div class="pers-card-label">The real reframes</div>
+        <div class="pers-row"><div class="pers-bad">Too considerate</div><div class="pers-arr">→</div><div class="pers-good">Makes others feel safe enough to be honest</div></div>
+        <div class="pers-row"><div class="pers-bad">Non-confrontational</div><div class="pers-arr">→</div><div class="pers-good">Reduces resistance, opens real conversation</div></div>
+        <div class="pers-row"><div class="pers-bad">Avoids being rude</div><div class="pers-arr">→</div><div class="pers-good">Leaves the other side with their dignity intact</div></div>
+        <div class="pers-row"><div class="pers-bad">Too warm</div><div class="pers-arr">→</div><div class="pers-good">Warmth + detachment = most dangerous state</div></div>
+        <div class="pers-row"><div class="pers-bad">Hates conflict</div><div class="pers-arr">→</div><div class="pers-good">Finds the win-win before conflict is needed</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="cta-inner">
+      <div class="cta-label reveal">Ready to go deeper?</div>
+      <h2 class="cta-h reveal">Learn it so well<br>you can <em>teach it.</em></h2>
+      <p class="cta-b reveal">The course is free. The understanding is permanent. And if something surfaces while you're going through it — a deal, a decision, a situation you're navigating right now — a clarity call is one booking away.</p>
+      <div class="cta-btns reveal">
+        <a href="#modules" class="btn-gold">Back to Module 01 →</a>
+        <a href="https://calendly.com/sthirclarity/sthirclarity-clarity-call" target="_blank" class="btn-ghost">Book a Clarity Call →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="/" class="footer-logo">SthirClarity</a>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="#modules">The Course</a>
+    <a href="https://calendly.com/sthirclarity/sthirclarity-clarity-call" target="_blank">Book a Call</a>
+    <a href="mailto:sthirclarity@gmail.com">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 SthirClarity · Atharv Mahadik</div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 70);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  function toggleModule(el) {
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.module-item.open').forEach(m => m.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  }
+</script>
+</body>
+</html>
