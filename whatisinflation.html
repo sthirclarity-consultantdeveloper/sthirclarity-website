@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Why Your ₹100 Feels Weaker Every Year — SthirClarity</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --ink:        #1a1814;
+      --ink-light:  #4a4640;
+      --ink-faint:  #8a8480;
+      --cream:      #faf8f4;
+      --cream-dark: #f0ece4;
+      --gold:       #b8860b;
+      --gold-light: #d4a017;
+      --rule:       #d8d0c4;
+      --accent:     #c0392b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.5rem, 6vw, 5rem);
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-back {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--gold); }
+    .nav-back::before { content: '←'; font-size: 0.9rem; }
+
+    .nav-tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--gold);
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 6vw, 2rem) 3rem;
+      text-align: center;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-kicker {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      font-weight: 300;
+      font-style: italic;
+      max-width: 560px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      font-size: 0.78rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.04em;
+    }
+
+    .hero-meta span { display: flex; align-items: center; gap: 5px; }
+    .hero-meta .dot { color: var(--rule); }
+
+    /* ── RULE ── */
+    .rule-ornament {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 2rem auto 0;
+      padding: 0 clamp(1.5rem, 6vw, 2rem);
+    }
+    .rule-ornament::before,
+    .rule-ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+    .rule-ornament-icon {
+      color: var(--gold);
+      font-size: 1.1rem;
+    }
+
+    /* ── ARTICLE BODY ── */
+    article {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 3.5rem clamp(1.5rem, 6vw, 2rem) 6rem;
+      animation: fadeUp 0.9s 0.15s ease both;
+    }
+
+    /* ── LEAD PARAGRAPH ── */
+    article > p:first-of-type {
+      font-size: 1.15rem;
+      line-height: 1.85;
+      color: var(--ink-light);
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* ── SECTION HEADINGS ── */
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 3vw, 1.75rem);
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--ink);
+      margin: 3.5rem 0 1.2rem;
+    }
+
+    h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 3rem 0 0.5rem;
+    }
+
+    /* ── PARAGRAPHS ── */
+    p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--ink-light);
+      margin-bottom: 1.4rem;
+    }
+
+    p strong {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    p em {
+      font-style: italic;
+      color: var(--ink);
+    }
+
+    /* ── CALLOUT BOXES ── */
+    .callout {
+      background: var(--cream-dark);
+      border-left: 3px solid var(--gold);
+      padding: 1.4rem 1.6rem;
+      margin: 2.2rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .callout p {
+      margin: 0;
+      font-size: 1.02rem;
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    .callout strong {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── EXAMPLE BLOCKS ── */
+    .example {
+      background: white;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      padding: 1.6rem 1.8rem;
+      margin: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .example::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    }
+
+    .example-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .example p {
+      margin: 0;
+      font-size: 0.96rem;
+      color: var(--ink);
+    }
+
+    .example p + p { margin-top: 0.8rem; }
+
+    /* ── PULL QUOTE ── */
+    blockquote {
+      margin: 3rem -1rem;
+      padding: 2rem 2.5rem;
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      text-align: center;
+    }
+
+    blockquote p {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem, 3vw, 1.55rem);
+      font-weight: 600;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ── INFLATION REASONS ── */
+    .reasons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.8rem 0;
+    }
+
+    .reason {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      padding: 1.2rem 1.4rem;
+      background: white;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .reason:hover { border-color: var(--gold); transform: translateX(4px); }
+
+    .reason-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--rule);
+      line-height: 1;
+      min-width: 2rem;
+    }
+
+    .reason-body h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.01em;
+    }
+
+    .reason-body p {
+      font-size: 0.9rem;
+      margin: 0;
+      color: var(--ink-light);
+      line-height: 1.65;
+    }
+
+    /* ── WHO WINS TABLE ── */
+    .wins-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.8rem 0;
+      font-size: 0.92rem;
+    }
+
+    .wins-table th {
+      text-align: left;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      padding: 0.6rem 1rem;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .wins-table td {
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+      color: var(--ink-light);
+      line-height: 1.55;
+    }
+
+    .wins-table td:first-child {
+      font-weight: 500;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding: 2px 7px;
+      border-radius: 2px;
+    }
+    .badge.win  { background: #e8f5e9; color: #2e7d32; }
+    .badge.lose { background: #fdecea; color: #c62828; }
+
+    /* ── STAT HIGHLIGHT ── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .stat {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 1.4rem 1.5rem;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: #c0b8b0;
+      line-height: 1.4;
+    }
+
+    /* ── CLOSING NOTE ── */
+    .closing {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+      font-size: 0.85rem;
+      color: var(--ink-faint);
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* ── SHARE BAR ── */
+    .share-bar {
+      max-width: 680px;
+      margin: 0 auto 5rem;
+      padding: 0 clamp(1.5rem, 6vw, 2rem);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .share-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      font-weight: 500;
+    }
+
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      padding: 7px 16px;
+      border-radius: 3px;
+      border: 1px solid var(--rule);
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--ink);
+      background: white;
+      transition: all 0.2s;
+    }
+    .share-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    .share-btn.copy-btn.copied { border-color: #2e7d32; color: #2e7d32; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      padding: 2.5rem clamp(1.5rem, 6vw, 5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--cream);
+      text-decoration: none;
+    }
+    .footer-logo span { color: var(--gold-light); }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: #6a6460;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── PROGRESS BAR ── */
+    .progress-bar {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      height: 2px;
+      background: var(--gold);
+      width: 0%;
+      z-index: 99;
+      transition: width 0.1s linear;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      blockquote { margin: 2rem 0; padding: 1.5rem; }
+      .stat-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="progress-bar" id="progress"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="https://sthirclarity.com">Sthir<span>Clarity</span></a>
+    <span class="nav-tag">Insight</span>
+    <a class="nav-back" href="https://sthirclarity.com">Back to site</a>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-kicker">SthirClarity Reads · Economics &amp; Everyday Life</div>
+    <h1>Why Your <em>₹100</em> Feels Weaker Every Year — And Nobody Properly Explained Why</h1>
+    <p class="hero-sub">The honest, no-jargon, first-principles explanation of inflation your school textbook never gave you.</p>
+    <div class="hero-meta">
+      <span>SthirClarity</span>
+      <span class="dot">·</span>
+      <span>12 min read</span>
+      <span class="dot">·</span>
+      <span>Economics</span>
+    </div>
+  </header>
+
+  <div class="rule-ornament"><span class="rule-ornament-icon">◆</span></div>
+
+  <!-- ARTICLE -->
+  <article>
+
+    <p>Somewhere between paying ₹15 for a cutting chai in 2010 and paying ₹35 for the same cup today, something happened to your money. Nobody robbed you. Your wallet didn't have a leak. The notes look the same. But they buy less. That feeling has a name. It's called inflation. And most explanations are either too academic to care about or too shallow to actually understand. This is neither. Let's start from the very beginning.</p>
+
+    <h3>The Foundation</h3>
+    <h2>First, Forget the Definition You Were Taught</h2>
+
+    <p>Most people learned inflation as: <em>"a general rise in the price of goods and services over time."</em> That's accurate. It's also completely useless. It tells you <strong>what</strong> happens but not <strong>why</strong>, not <strong>how</strong>, and not what it actually means for your life. So let's throw that away and build it from scratch.</p>
+
+    <div class="callout">
+      <p><strong>The Core Idea</strong>Your ₹500 note is a piece of paper. It has no intrinsic value. You cannot eat it, build with it, or stay warm with it. Its only power is that everyone agrees it can be exchanged for something real — food, fuel, services, time. <strong>Money is not wealth. Money is a claim on wealth.</strong></p>
+    </div>
+
+    <p>And here is where everything begins. Because if money is just a claim — then what happens when there are more claims than there are things to claim?</p>
+
+    <h3>The Simplest Example</h3>
+    <h2>The Onion Explains Everything</h2>
+
+    <div class="example">
+      <div class="example-label">🧅 The Onion Town</div>
+      <p>A small town grows exactly <strong>1,000 onions</strong> a week. There is exactly <strong>₹1,000</strong> in the entire town. Every week, all the money chases all the onions. Simple math: each onion costs <strong>₹1</strong>.</p>
+      <p>Now the government prints an extra ₹1,000. The town is now richer on paper — ₹2,000 is floating around. But there are <em>still only 1,000 onions.</em> Now ₹2,000 is chasing the same 1,000 onions. Each onion adjusts to <strong>₹2</strong>.</p>
+      <p>You haven't become poorer because someone stole from you. You've become poorer because your ₹1 now only commands half an onion. Your <em>claim</em> shrunk.</p>
+    </div>
+
+    <blockquote><p>"Too much money chasing too few goods. The onion didn't change — what changed is how many rupees it takes to deserve one."</p></blockquote>
+
+    <h3>Why Prices Actually Rise</h3>
+    <h2>But Real Life is Messier Than One Onion Town</h2>
+
+    <p>The onion example is clean and theoretical. Real inflation is usually all of the following happening at once:</p>
+
+    <div class="reasons">
+      <div class="reason">
+        <div class="reason-num">01</div>
+        <div class="reason-body">
+          <h4>Supply Shocks</h4>
+          <p>It rains too much in Maharashtra. The onion crop fails. Suddenly there are only 600 onions, but the same ₹1,000 is still in town. Each onion now costs ₹1.67. The money supply didn't change — the onions got scarcer. This is <strong>supply-side inflation.</strong></p>
+        </div>
+      </div>
+      <div class="reason">
+        <div class="reason-num">02</div>
+        <div class="reason-body">
+          <h4>Demand Surges</h4>
+          <p>Diwali arrives. Every household wants onions for their cooking. 1,200 people want onions but there are only 1,000. Sellers raise prices. Supply is the same, money is the same — but desire went up. This is <strong>demand-pull inflation.</strong></p>
+        </div>
+      </div>
+      <div class="reason">
+        <div class="reason-num">03</div>
+        <div class="reason-body">
+          <h4>Cost of Making Things Goes Up</h4>
+          <p>The truck driver bringing onions to your city pays more for diesel. He charges the wholesaler more. The wholesaler charges the sabziwala more. The sabziwala charges you more. The onion didn't change. But the <strong>cost of moving it</strong> did. This is <strong>cost-push inflation</strong> — and it ripples through everything, silently.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Bigger Numbers</h3>
+    <h2>The Car in Your Driveway Is Lying to You</h2>
+
+    <p>You bought a car in 2015 for ₹6 lakhs. Today, the same model costs ₹10 lakhs. Your instinct is to say the car got more expensive. That's partly true. But here's the deeper truth:</p>
+
+    <div class="callout">
+      <p><strong>The Real Insight</strong>The car is mostly the same car. What actually changed is what ₹6 lakhs <em>means.</em> In 2015, ₹6 lakhs represented a certain portion of a year's salary, a certain number of working hours, a certain claim on the economy's output. Today, ₹6 lakhs represents less of all of those things.</p>
+    </div>
+
+    <p>This is why comparing prices across decades without adjusting for inflation is meaningless. A salary of ₹30,000 per month in 2005 was genuinely comfortable. The same ₹30,000 today is a struggle. The number is identical. The reality is completely different.</p>
+
+    <h3>The Invisible Burden</h3>
+    <h2>School Fees: The Inflation Nobody Talks About</h2>
+
+    <p>Many parents in India are paying school fees that have tripled or quadrupled in 15 years. Not because schools built three more swimming pools. Not because teachers are being paid three times as much. But because of <strong>sectoral inflation</strong> — where prices in one sector rise far faster than general inflation.</p>
+
+    <p>Education and healthcare are the two most brutal examples. Why? Because these sectors share three punishing traits:</p>
+
+    <div class="reasons">
+      <div class="reason">
+        <div class="reason-num">①</div>
+        <div class="reason-body">
+          <h4>Supply is inelastic</h4>
+          <p>You cannot quickly open 500 new good schools the way you can grow more wheat. A good school takes decades to build its reputation.</p>
+        </div>
+      </div>
+      <div class="reason">
+        <div class="reason-num">②</div>
+        <div class="reason-body">
+          <h4>Demand is emotional and non-negotiable</h4>
+          <p>No parent says, <em>"fees are high, maybe my child won't study."</em> Demand doesn't fall when price rises. Sellers know this.</p>
+        </div>
+      </div>
+      <div class="reason">
+        <div class="reason-num">③</div>
+        <div class="reason-body">
+          <h4>Competition is limited</h4>
+          <p>In most cities, the number of seats in quality schools is genuinely scarce relative to aspiring families. The equilibrium only goes one direction — up.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Small Numbers, Big Truths</h3>
+    <h2>That ₹35 Chai is Hiding Something</h2>
+
+    <p>Back to that cutting chai. ₹15 in 2010. ₹35 today. That looks like ₹20 extra. Trivial, right? Let's think about it differently:</p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-num">133%</div>
+        <div class="stat-label">Price increase on your morning chai over 14 years</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">~12 yrs</div>
+        <div class="stat-label">Time for prices to double at 6% annual inflation</div>
+      </div>
+    </div>
+
+    <p>If your salary grew by 133% in the same period, you've kept pace. If it didn't, you've been quietly getting poorer every single morning without noticing.</p>
+
+    <p>A 6% annual inflation rate — which India has averaged across many periods — means prices roughly <strong>double every 12 years.</strong> The thing you buy for ₹100 today will cost ₹200 when your child finishes school. Not because the thing changed. Because the claim your money represents will have shrunk by half.</p>
+
+    <h3>Not All Losers</h3>
+    <h2>Who Actually Benefits From Inflation?</h2>
+
+    <p>Here's the part most explanations skip. Inflation isn't only destruction — it moves value from one place to another. Somebody wins when you lose.</p>
+
+    <table class="wins-table">
+      <thead>
+        <tr>
+          <th>Who</th>
+          <th>Outcome</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Borrowers</td>
+          <td><span class="badge win">Win</span></td>
+          <td>Your ₹50L home loan repayment is worth less in real terms each passing year. The bank gets back less than it lent, in real value.</td>
+        </tr>
+        <tr>
+          <td>Asset owners (land, gold, property)</td>
+          <td><span class="badge win">Win</span></td>
+          <td>Assets hold or increase their real value. This is why the wealth gap widens during inflation — people who own things get protected.</td>
+        </tr>
+        <tr>
+          <td>People on fixed incomes</td>
+          <td><span class="badge lose">Lose</span></td>
+          <td>Retirees, daily wage workers, students on fixed allowances — their claims are fixed while everything around them gets pricier.</td>
+        </tr>
+        <tr>
+          <td>Cash holders</td>
+          <td><span class="badge lose">Lose</span></td>
+          <td>Idle cash in a savings account typically earns less than inflation. Every year you hold it, it silently buys less.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>The RBI's Job</h3>
+    <h2>Keeping the Music Playing Without Letting It Get Chaotic</h2>
+
+    <p>The Reserve Bank of India exists, in large part, to manage this. Its primary tool is the <strong>interest rate.</strong></p>
+
+    <div class="reasons">
+      <div class="reason">
+        <div class="reason-num">↑</div>
+        <div class="reason-body">
+          <h4>When inflation rises → RBI raises rates</h4>
+          <p>Borrowing becomes expensive. People spend less. Demand cools. Prices stabilise. It's a deliberate, controlled slowdown.</p>
+        </div>
+      </div>
+      <div class="reason">
+        <div class="reason-num">↓</div>
+        <div class="reason-body">
+          <h4>When inflation is too low → RBI cuts rates</h4>
+          <p>Borrowing becomes cheap. People buy cars and homes. Businesses expand. Demand rises. The economy warms up.</p>
+        </div>
+      </div>
+    </div>
+
+    <p>India's official inflation target is <strong>4%</strong>, with a tolerance band of 2%–6%. A little inflation is healthy — it means the economy is alive. Zero inflation often signals that the economy is frozen, that nobody is spending, that growth has stopped. That's far more dangerous.</p>
+
+    <div class="callout">
+      <p><strong>What About Deflation?</strong>Falling prices sounds like a gift but is actually terrifying. If you know your phone will cost less next month, you wait. If everyone waits, nobody buys. Factories shut. Workers aren't paid. Workers can't buy. The economy collapses into itself. Japan suffered this for nearly two lost decades.</p>
+    </div>
+
+    <h3>The Final Principle</h3>
+    <h2>Inflation is a Tax You Never Voted For</h2>
+
+    <p>When the government prints more money without the economy producing proportionally more goods and services, your existing ₹100 buys less. The government effectively transferred a little bit of your money's purchasing power to itself — to fund roads, salaries, subsidies, or simply to cover a budget deficit. You never received a tax notice. You never wrote a cheque. But you paid.</p>
+
+    <p>Economists have a name for this: <strong>the inflation tax.</strong> It is silent, universal, and hits hardest those who hold the most cash and the least assets.</p>
+
+    <blockquote><p>"Your money is not just a number. It is a claim — on real things, real work, real value. And like all claims, its power depends entirely on the world it is being presented in."</p></blockquote>
+
+    <p>Understanding this doesn't make inflation go away. But it changes how you see it — and how you respond. It's why sitting on idle cash is a slow loss. Why investing in assets matters. Why salary negotiations should always reference real purchasing power, not just numbers. Why ₹1 crore in a bank account in 2040 will not feel like ₹1 crore feels today.</p>
+
+    <p>Now you know why that claim shrinks. And why nobody ever quite explained it this simply before.</p>
+
+    <div class="closing">Written for anyone who ever wondered why everything just keeps getting more expensive — and deserved a real answer.<br/>— SthirClarity</div>
+
+  </article>
+
+  <!-- SHARE BAR -->
+  <div class="share-bar">
+    <span class="share-label">Share this read</span>
+    <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https://sthirclarity.com" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+    <a class="share-btn" href="https://twitter.com/intent/tweet?text=Why+Your+₹100+Feels+Weaker+Every+Year&url=https://sthirclarity.com" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      Share
+    </a>
+    <button class="share-btn copy-btn" id="copyBtn" onclick="copyLink()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span id="copyText">Copy link</span>
+    </button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a class="footer-logo" href="https://sthirclarity.com">Sthir<span>Clarity</span></a>
+    <span class="footer-copy">© 2025 SthirClarity. All rights reserved.</span>
+  </footer>
+
+  <script>
+    // Reading progress bar
+    window.addEventListener('scroll', () => {
+      const doc = document.documentElement;
+      const scrollTop = doc.scrollTop || document.body.scrollTop;
+      const scrollHeight = doc.scrollHeight - doc.clientHeight;
+      const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      document.getElementById('progress').style.width = progress + '%';
+    });
+
+    // Copy link button
+    function copyLink() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        const btn = document.getElementById('copyBtn');
+        const txt = document.getElementById('copyText');
+        btn.classList.add('copied');
+        txt.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          txt.textContent = 'Copy link';
+        }, 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>
